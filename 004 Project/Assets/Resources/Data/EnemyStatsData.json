@@ -1,0 +1,56 @@
+  {
+    "enemyStats": [
+        {
+            "key": 1001,
+            "value": {
+                "id" :  1001,
+                "curHp": 180,
+                "maxHp": 180,
+                "attackDamage": 30.0,
+                "attackSpeed": 1.0,
+                "moveSpeed": 1,
+                "defense": 5.0,
+                "Exp": 25
+            }
+        },
+        {
+            "key": 1002,
+            "value": {
+                "id" :  1002,
+                "curHp": 400,
+                "maxHp": 400,
+                "attackDamage": 20.0,
+                "attackSpeed": 1.3,
+                "moveSpeed": 1,
+                "defense": 10.0,
+                "Exp":  250
+            }
+        },
+        {
+            "key": 1003,
+            "value": {
+                "id" :  1003,
+                "curHp": 100,
+                "maxHp": 100,
+                "attackDamage": 20.0,
+                "attackSpeed": 1.2,
+                "moveSpeed": 1,
+                "defense": 3.0,
+                "Exp": 35
+            }
+        },
+        {
+            "key": 1004,
+            "value": {
+                "id" :  1004,
+                "curHp": 200,
+                "maxHp": 200,
+                "attackDamage": 17.0,
+                "attackSpeed": 1.5,
+                "moveSpeed": 1,
+                "defense": 8.0,
+                "Exp": 30
+            }
+        }
+    ]
+}

@@ -1,0 +1,98 @@
+{
+  "skills": [
+    {
+      "key": "FireSkill",
+      "value": {
+        "damageData": {
+          "Damage": 2,
+          "knockbackAngle": {
+            "x": 1,
+            "y": 1
+          },
+          "knockbackStrength": 12
+        },
+        "cooldownData": { "Cooldown": 10 },
+        "movementData": {
+          "Direction": {
+            "x": 1,
+            "y": 0
+          },
+          "Velocity": 1
+        },
+        "spearData": null,
+        "fireData": { "FireDistance": 5 }
+      }
+    },
+    {
+      "key": "IceSkill",
+      "value": {
+        "damageData": {
+          "Damage": 2,
+          "knockbackAngle": {
+            "x": 1,
+            "y": 0.1   // x좌표로만의 넉백에서 문제발생
+          },
+          "knockbackStrength": 20
+        },
+        "cooldownData": { "Cooldown": 10 },
+        "movementData": {
+          "Direction": {
+            "x": 1,
+            "y": 0
+          },
+          "Velocity": 30
+        },
+        "iceData": null
+      }
+    },
+    {
+      "key": "LandSkill",
+      "value": {
+        "damageData": {
+          "Damage": 4,
+          "knockbackAngle": {
+            "x": 0,
+            "y": 1
+          },
+          "knockbackStrength": 15
+        },
+        "cooldownData": { "Cooldown": 10 },
+        "movementData": {
+          "Direction": {
+            "x": 1,
+            "y": 0
+          },
+          "Velocity": 1
+        },
+        "spearData": null,
+        "fireData": null,
+        "landData": null
+      }
+    },
+    {
+      "key": "LightSkill",
+      "value": {
+        "damageData": {
+          "Damage": 1.5,
+          "knockbackAngle": {
+            "x": 1,
+            "y": 1
+          },
+          "knockbackStrength": 10
+        },
+        "cooldownData": { "Cooldown": 5 },
+        "movementData": {
+          "Direction": {
+            "x": 1,
+            "y": 0
+          },
+          "Velocity": 10
+        },
+        "lightData": {
+          "ThrowSpeed": 10,
+          "ThrowDistance": 7
+        }
+      }
+    }
+  ]
+}
