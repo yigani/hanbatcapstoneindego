@@ -6,11 +6,13 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
     [SerializeField] private int MaxExp;
     private int currentExp;
 
+    public static bool savePlayerData = false;
     public static Element currentElement;
     public static int currentLevel;
     public static float currentAddAttackDamage;
     public static int currentHp;
     public static int currentGoldPoint;
+    public static int exp;
 
     public int Level
     {
@@ -26,14 +28,17 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
         base.Awake();
     }
 
-    protected override void SetStatsData(PlayerStatsData stats)
+    protected override void SetStatsData(PlayerStatsData stats, bool isSave)
     {
-        base.SetStatsData(stats);
+        base.SetStatsData(stats, isSave);
         MaxExp = stats.MaxExp;
     }
     private void OnEnable()
     {
-        InitializePlayerStats();
+        if (savePlayerData)
+            InitializeLoadPlayerStats(); 
+        else
+            InitializePlayerStats();
 
     }
 
@@ -43,12 +48,30 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
         {
             transform.root.GetComponent<CharacterAudio>().PlayDeathSound();
         }
+        else
+        {
+            currentElement = Element;
+            currentLevel = level;
+            currentAddAttackDamage = addAttackDamage;
+            currentHp = curHp;
+            exp = currentExp;
+        }
     }
     private void Start()
     {
         ChangeElement(Element.Fire, fireLevel);
     }
+    private void InitializeLoadPlayerStats()
+    {
+        id = 1; 
+        level = currentLevel;
+        currentExp = exp;
+        Element = currentElement;
+        curHp = currentHp;
+        addAttackDamage = currentAddAttackDamage;
+        SetStat();
 
+    }
     private void InitializePlayerStats()
     {
         // 여기서 id와 level을 초기화
@@ -67,7 +90,7 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
             var stats = kvp.Value;
             if (stats.id == id && stats.level == level)
             {
-                SetStatsData(stats);
+                SetStatsData(stats, savePlayerData);
                 return;
             }
         }

@@ -15,8 +15,11 @@ public class Portal : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log(1);
-            if(Input.GetKey(KeyCode.F))
+            if (Input.GetKey(KeyCode.F))
+            {
+                PlayerStats.savePlayerData= true;
                 SceneManager.LoadScene(1);
+            }
         }
     }
 
