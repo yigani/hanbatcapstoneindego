@@ -59,7 +59,10 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
     }
     private void Start()
     {
-        ChangeElement(Element.Fire, fireLevel);
+        if(!savePlayerData)
+            ChangeElement(Element.Fire, fireLevel);
+        else
+            ChangeElement(currentElement, fireLevel);
     }
     private void InitializeLoadPlayerStats()
     {
