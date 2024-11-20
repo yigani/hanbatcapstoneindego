@@ -23,6 +23,6 @@ public class PlaterDataShow : MonoBehaviour
         myStyle.fontSize = 30;
         GUI.Label(new Rect(200,180,Screen.width*0.5f,Screen.height*0.25f),"parryratio : " + GameManager.PlayerManager.DataAnalyze.parryRatio.ToString("F2"),myStyle);
         GUI.Label(new Rect(200,210,Screen.width*0.5f,Screen.height*0.25f),"runratio : " + GameManager.PlayerManager.DataAnalyze.runRatio.ToString("F2"),myStyle);
-        GUI.Label(new Rect(200,20,Screen.width*0.5f,Screen.height*0.25f),"dashratio : " + GameManager.PlayerManager.DataAnalyze.dashRatio.ToString("F2"),myStyle);
+        GUI.Label(new Rect(200,240,Screen.width*0.5f,Screen.height*0.25f),"dashratio : " + GameManager.PlayerManager.DataAnalyze.dashRatio.ToString("F2"),myStyle);
     }
 }
