@@ -16,7 +16,19 @@ public class Portal : MonoBehaviour
         {
             Debug.Log(1);
             if(Input.GetKey(KeyCode.F))
-                SceneManager.LoadScene(1);
+                {
+                    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+                    // 다음 씬의 인덱스 계산
+                    int nextSceneIndex = currentSceneIndex + 1;
+
+                    // 씬이 빌드에 포함되어 있는지 확인
+                    if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+                    {
+                        // 다음 씬 로드
+                        SceneManager.LoadScene(nextSceneIndex);
+                    }
+                }
         }
     }
 

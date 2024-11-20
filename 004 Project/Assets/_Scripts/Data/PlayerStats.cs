@@ -10,7 +10,7 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
     public static int currentLevel;
     public static float currentAddAttackDamage;
     public static int currentHp;
-    public static int currentGoldPoint;
+    public static int currentGoldPoint = 100;
 
     public int Level
     {
@@ -51,9 +51,9 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
 
     private void InitializePlayerStats()
     {
-        // ¿©±â¼­ id¿Í levelÀ» ÃÊ±âÈ­
-        id = 1; // ÇÃ·¹ÀÌ¾îÀÇ °íÀ¯ ID ¼³Á¤
-        level = 1; // ÃÊ±â ·¹º§ ¼³Á¤
+        // ï¿½ï¿½ï¿½â¼­ idï¿½ï¿½ levelï¿½ï¿½ ï¿½Ê±ï¿½È­
+        id = 1; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ID ï¿½ï¿½ï¿½ï¿½
+        level = 1; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         currentExp = 0;
         SetStat();
 
@@ -61,7 +61,7 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
 
     protected override void SetStat()
     {
-        // id¿Í level¿¡ ¸Â´Â µ¥ÀÌÅÍ °Ë»ö
+        // idï¿½ï¿½ levelï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
         foreach (var kvp in GameManager.Data.PlayerStatsDict)
         {
             var stats = kvp.Value;
@@ -77,7 +77,7 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
     public void AddExp(int exp)
     {
         currentExp += exp;
-        Debug.Log($"°æÇèÄ¡ È¹µæ: {exp}, ÇöÀç °æÇèÄ¡: {currentExp}/{MaxExp}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½Ä¡ È¹ï¿½ï¿½: {exp}, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡: {currentExp}/{MaxExp}");
 
         if (currentExp >= MaxExp)
         {
@@ -87,9 +87,9 @@ public class PlayerStats : CharacterStats<PlayerStatsData>
 
     public void LevelUp()
     {
-        currentExp -= MaxExp; // ÃÊ°úµÈ °æÇèÄ¡´Â ´ÙÀ½ ·¹º§·Î ÀÌ¾îÁü
-        Level++; // ·¹º§ Áõ°¡
-        Debug.Log($"·¹º§¾÷! ÇöÀç ·¹º§: {Level}");
+        currentExp -= MaxExp; // ï¿½Ê°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¾ï¿½ï¿½ï¿½
+        Level++; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {Level}");
     }
 
     protected override void UpdateAnimatorMoveSpeed()
