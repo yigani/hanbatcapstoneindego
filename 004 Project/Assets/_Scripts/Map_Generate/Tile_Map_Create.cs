@@ -217,93 +217,94 @@ public class Tile_Map_Create : MonoBehaviour
         }
     }
     private void ChangeRoom(Map_Node parent, int x, int y, int width, int height, string playStyle = null)
-{
-    bool test = false;
-    if (SceneManager.GetActiveScene().name == "Test 3") test = true;
-    if (map_count % 4 == 0) temp_spawn = spawn_count;
-    int floor_count = height / 5;
-
-    // j 먼저 계산 (바깥쪽 루프)
-    for (int j = 1; j <= floor_count; j++)
     {
-        bool monster_spawn = false;
-
-        int altitude3 = y + (j * 5);
-        int startPoint = UnityEngine.Random.Range(4, width / 2);
-        int rand = UnityEngine.Random.Range(width / 4, width / 2);
-
-        // i 계산 (안쪽 루프)
-        for (int i = x + startPoint; i < x + startPoint + rand; i++)
+        bool test = false;
+        if(SceneManager.GetActiveScene().name == "Test 3") test = true;
+        if(map_count %4 ==0) temp_spawn = spawn_count;
+        int floor_count = height / 5;
+        
+        // j 먼저 계산 (바깥쪽 루프)
+        for (int j = 1; j <= floor_count; j++)
         {
-            if (altitude3 < y + height - 2 && i < x + width - 3)
+            bool monster_spawn = false;
+            
+            int altitude3 = y + (j * 5);
+            int startPoint = UnityEngine.Random.Range(4, width / 2);
+            int rand = UnityEngine.Random.Range(width / 4, width / 2);
+            bool is_wall = false;
+            int wall_position = -1;
+
+            // i 계산 (안쪽 루프)
+            for (int i = x+startPoint; i < x+startPoint + rand; i++)
             {
-                if (altitude3 == y + height - 2) altitude3 -= 1;
-
-                // Entrance 처리
-                if (parent.map_type == Map_Node.Map_type.Enterance && !is_spawn)
+                if (altitude3 < y + height -2 && i < x + width - 3)
                 {
-                    is_spawn = true;
-                    monster_spawn = true;
-                    if (player == null)
+                    if(altitude3 == y + height -2) altitude3 -=1;
+                    if (parent.map_type == Map_Node.Map_type.Enterance && !is_spawn)
                     {
-                        player = GameManager.PlayerManager.Player;
+                        is_spawn = !is_spawn;
+                        monster_spawn =true;
+                        if (player == null)
+                        {
+                            player = GameManager.PlayerManager.Player;
+                        }
+                        player.transform.position = new Vector3(80 * (position_count / 4) + i + 4, -altitude3+3, 1);
                     }
-                    player.transform.position = new Vector3(80 * (position_count / 4) + i + 4, -altitude3 + 3, 1);
-                }
-
-                // Exit 처리 및 Portal 생성
-                else if (parent.map_type == Map_Node.Map_type.Exit && !is_exit)
-                {
-                    is_exit = true;
-
-                    // Portal 생성
-                    newPortal = Instantiate(portal);
-                    newPortal.transform.position = new Vector3(
-                        80 * ((position_count - 48) / 4) + i + 4,
-                        -240 - altitude3 + 2,
-                        1
-                    );
-
-                    // ArrowController에 Portal Transform 전달
-                    ArrowController arrowController = FindObjectOfType<ArrowController>();
-                    if (arrowController != null)
+                    else if (parent.map_type == Map_Node.Map_type.Exit && !is_exit)
                     {
-                        arrowController.SetPortalTransform(newPortal.transform);
-                        Debug.Log("Portal Transform이 ArrowController에 전달되었습니다.");
+                        is_exit = !is_exit;
+                        newPortal = Instantiate(portal);
+                        newPortal.transform.position = new Vector3(80 * ((position_count - 48) / 4) + i + 4, -240 - altitude3+2, 1);
+                    }
+                    if(!monster_spawn && !test)
+                    {
+                        Debug.Log(test);
+                        spawn_count++;
+                        monster_spawn =true;
+                        Vector3 pos = new Vector3(80 * ((position_count % 16) / 4) + i + (rand/2) , 2-altitude3- (position_count / 16) * 80, 1);
+                        ObjectPool.instance.GetObjectFromPool(pos);
+                        // GameObject spawn_monster = Instantiate(monster[a]);
+                        // spawn_monster.transform.position = new Vector3(80 * ((position_count % 16) / 4) + i + (rand/2) , 2-altitude3- (position_count / 16) * 80, 1);
+                    }
+                    parent.tile[i, altitude3] = 10;
+                    if(altitude3 == y+5)
+                    {
+
                     }
                     else
                     {
-                        Debug.LogWarning("ArrowController를 찾을 수 없습니다.");
+                        if(playStyle == "dash" &&!is_wall)
+                        {
+                            if(Random.Range(0.0f,10.0f) < 3.0f)
+                            {
+                                wall_position = Random.Range(1,rand-1);
+                                parent.tile[i + wall_position,altitude3-1] = 99;
+                            }
+                            is_wall = true;
+                        }
+                        else if(playStyle == "High_dash" &&!is_wall )
+                        {
+                            
+                            wall_position = Random.Range(1,rand-1);
+                            parent.tile[i + wall_position, altitude3 -1] = 99;
+                            is_wall = true;
+                        }
                     }
                 }
-
-                // 몬스터 생성 처리
-                if (!monster_spawn && !test)
-                {
-                    spawn_count++;
-                    monster_spawn = true;
-                    Vector3 pos = new Vector3(
-                        80 * ((position_count % 16) / 4) + i + (rand / 2),
-                        2 - altitude3 - (position_count / 16) * 80,
-                        1
-                    );
-                    ObjectPool.instance.GetObjectFromPool(pos);
-                }
-
-                // Tile 업데이트
-                parent.tile[i, altitude3] = 10;
             }
+            monster_spawn =false;
         }
-    }
+        if(map_count%4 == 3) 
+        {
+            // Debug.Log(map_count);
+            spawn_list[map_count/4].start = temp_spawn;
+            spawn_list[map_count/4].end = spawn_count;
+            // Debug.Log(temp_spawn+ " " + spawn_count + " " + spawn_list[map_count/4].start + " " + spawn_list[map_count/4].end);
+        }
+        map_count++;
+        position_count++;
 
-    if (map_count % 4 == 3)
-    {
-        spawn_list[map_count / 4].start = temp_spawn;
-        spawn_list[map_count / 4].end = spawn_count;
     }
-    map_count++;
-    position_count++;
-}
 
 
 
